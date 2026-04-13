@@ -270,17 +270,200 @@ nav a:hover::after{transform:scaleX(1)}
 .messenger-widget:hover .messenger-tooltip{opacity:1}
 
 /* ══════════════════════════════════════════
-   RESULTS STATS (kept from original)
+   RESULTS STATS — Mac Browser Window Style
 ══════════════════════════════════════════ */
-.results-wrap{background:linear-gradient(135deg,var(--dark3) 0%,var(--dark4) 100%);position:relative;overflow:hidden}
-.results-wrap::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse 55% 70% at 50% 50%,rgba(255,155,81,.06) 0%,transparent 70%);pointer-events:none}
-.results-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(191,201,209,.07);border-radius:18px;overflow:hidden;margin-top:4rem}
-.result-cell{background:var(--dark3);padding:3rem 2rem;text-align:center;transition:background .3s;position:relative;overflow:hidden;cursor:default}
-.result-cell:hover{background:rgba(29,40,48,.95)}
-.result-cell::before{content:"";position:absolute;bottom:0;left:20%;right:20%;height:1px;background:linear-gradient(90deg,transparent,var(--cu),transparent);opacity:0;transition:opacity .3s}
-.result-cell:hover::before{opacity:.6}
-.result-num{font-family:"Syne",sans-serif;font-size:3.2rem;font-weight:800;background:linear-gradient(135deg,var(--cu-lo),var(--cu),var(--cu-hi));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:.5rem}
-.result-label{font-size:.875rem;color:var(--gray)}
+.results-wrap{
+  background:linear-gradient(135deg,var(--dark3) 0%,var(--dark4) 100%);
+  position:relative;overflow:hidden;
+}
+.results-wrap::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 70% at 50% 50%,rgba(255,155,81,.07) 0%,transparent 70%);
+  pointer-events:none;
+}
+
+/* Mac browser window wrapper */
+.results-mac-window{
+  margin-top:4rem;
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.07),
+    0 50px 100px rgba(0,0,0,.6),
+    0 0 80px rgba(255,155,81,.08);
+  animation:macResultsFloat 7s ease-in-out infinite;
+}
+@keyframes macResultsFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
+}
+
+/* Browser chrome bar */
+.results-mac-bar{
+  background:linear-gradient(180deg,#3a3a3c 0%,#2c2c2e 100%);
+  padding:12px 18px;
+  display:flex;align-items:center;gap:12px;
+  border-bottom:1px solid rgba(0,0,0,.5);
+  user-select:none;
+}
+.rmb-dots{display:flex;gap:8px;align-items:center;flex-shrink:0}
+.rmb-dot{width:13px;height:13px;border-radius:50%;cursor:pointer;transition:filter .2s;position:relative}
+.rmb-dot:hover{filter:brightness(1.2)}
+.rmb-dot.c{background:#ff5f57;box-shadow:0 0 6px rgba(255,95,87,.55)}
+.rmb-dot.m{background:#febc2e;box-shadow:0 0 6px rgba(254,188,46,.45)}
+.rmb-dot.e{background:#28c840;box-shadow:0 0 6px rgba(40,200,64,.45)}
+.rmb-dots:hover .rmb-dot.c::after{content:"×";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:900;color:rgba(100,0,0,.8)}
+.rmb-dots:hover .rmb-dot.m::after{content:"–";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:rgba(100,70,0,.8)}
+.rmb-dots:hover .rmb-dot.e::after{content:"+";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:rgba(0,60,0,.8)}
+
+/* Address / tab bar */
+.rmb-tabs{display:flex;align-items:center;flex:1;gap:6px;margin:0 12px}
+.rmb-tab{
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:8px 8px 0 0;
+  padding:5px 16px 6px;
+  font-family:"DM Sans",sans-serif;font-size:.75rem;color:rgba(255,255,255,.7);
+  display:flex;align-items:center;gap:7px;white-space:nowrap;
+}
+.rmb-tab.active{background:rgba(22,33,42,.95);color:#fff;border-color:rgba(255,155,81,.25)}
+.rmb-tab-favicon{width:12px;height:12px;border-radius:3px;background:linear-gradient(135deg,var(--cu-lo),var(--cu));flex-shrink:0}
+.rmb-tab-close{color:rgba(255,255,255,.35);font-size:.7rem;margin-left:4px;cursor:pointer}
+.rmb-tab-close:hover{color:rgba(255,255,255,.7)}
+
+.rmb-url{
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:8px;
+  padding:5px 14px;
+  font-family:"DM Sans",sans-serif;font-size:.75rem;color:rgba(255,255,255,.45);
+  display:flex;align-items:center;gap:6px;
+  flex-shrink:0;min-width:220px;
+}
+.rmb-lock{color:var(--cu);font-size:.7rem}
+.rmb-controls{display:flex;align-items:center;gap:10px;margin-left:8px}
+.rmb-ctrl{color:rgba(255,255,255,.3);font-size:.85rem;cursor:pointer;transition:color .2s}
+.rmb-ctrl:hover{color:rgba(255,255,255,.65)}
+
+/* Toolbar row */
+.rmb-toolbar{
+  background:rgba(18,28,36,.95);
+  padding:7px 18px;
+  display:flex;align-items:center;gap:12px;
+  border-bottom:1px solid rgba(255,155,81,.1);
+}
+.rmb-nav{display:flex;gap:6px}
+.rmb-nav-btn{
+  width:28px;height:28px;border-radius:6px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.35);font-size:.8rem;cursor:pointer;transition:all .2s;
+}
+.rmb-nav-btn:hover{background:rgba(255,255,255,.1);color:#fff}
+.rmb-nav-btn.active-nav{color:rgba(255,255,255,.65)}
+.rmb-full-url{
+  flex:1;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.07);
+  border-radius:8px;
+  padding:5px 14px;
+  font-family:"DM Sans",sans-serif;font-size:.75rem;
+  color:rgba(191,201,209,.6);
+  display:flex;align-items:center;gap:8px;
+}
+.rmb-secure{color:#4ade80;font-size:.65rem;font-weight:600}
+.rmb-url-text{color:rgba(255,255,255,.5)}
+.rmb-url-text .url-domain{color:rgba(255,255,255,.85);font-weight:500}
+.rmb-right-tools{display:flex;gap:6px;align-items:center}
+.rmb-tool{color:rgba(255,255,255,.3);font-size:.9rem;cursor:pointer;transition:color .2s}
+.rmb-tool:hover{color:rgba(255,155,81,.8)}
+
+/* Page content inside the mac window */
+.results-page{
+  background:rgba(12,20,28,.96);
+  padding:0;
+  position:relative;overflow:hidden;
+}
+/* Copper shimmer bar at very top of page content */
+.results-page::before{
+  content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,transparent,var(--cu-lo),var(--cu),var(--cu-hi),var(--cu),var(--cu-lo),transparent);
+  background-size:300%;animation:copperShift 4s linear infinite;
+}
+
+/* Page header inside mac */
+.results-page-header{
+  padding:2.5rem 3rem 2rem;
+  border-bottom:1px solid rgba(191,201,209,.07);
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:1rem;
+}
+.results-page-title{font-family:"Syne",sans-serif;font-weight:800;font-size:1.3rem;color:var(--white)}
+.results-page-sub{font-size:.82rem;color:var(--gray);margin-top:4px}
+.results-page-live{display:flex;align-items:center;gap:6px;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.18);border-radius:100px;padding:5px 14px;font-size:.72rem;color:#4ade80;font-weight:600}
+.results-page-live::before{content:"";width:6px;height:6px;background:#4ade80;border-radius:50%;animation:blink 1.5s infinite}
+
+/* Stat cards inside mac */
+.results-mac-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1px;background:rgba(191,201,209,.06);
+}
+.result-mac-cell{
+  background:rgba(12,20,28,.96);
+  padding:2.5rem 2rem;text-align:center;
+  position:relative;overflow:hidden;
+  transition:background .3s,box-shadow .3s;cursor:default;
+}
+.result-mac-cell:hover{background:rgba(18,28,38,.98)}
+/* Vertical dividers glow on hover */
+.result-mac-cell::after{
+  content:"";position:absolute;bottom:0;left:15%;right:15%;height:1px;
+  background:linear-gradient(90deg,transparent,var(--cu),transparent);
+  opacity:0;transition:opacity .35s;
+}
+.result-mac-cell:hover::after{opacity:.8}
+/* Icon pill */
+.rmc-icon{
+  width:44px;height:44px;
+  background:var(--cu-dim);border:1px solid rgba(255,155,81,.2);
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1rem;font-size:1.25rem;
+  transition:background .3s,box-shadow .3s;
+}
+.result-mac-cell:hover .rmc-icon{
+  background:rgba(255,155,81,.15);
+  box-shadow:0 0 20px rgba(255,155,81,.2);
+}
+.rmc-num{
+  font-family:"Syne",sans-serif;font-size:3rem;font-weight:800;
+  background:linear-gradient(135deg,var(--cu-lo),var(--cu),var(--cu-hi));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  line-height:1;margin-bottom:.5rem;
+}
+.rmc-label{font-size:.82rem;color:var(--gray);margin-bottom:.5rem}
+.rmc-badge{
+  display:inline-block;
+  background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.15);
+  border-radius:100px;padding:2px 10px;
+  font-size:.68rem;color:#4ade80;font-weight:600;
+}
+
+/* Status bar at bottom */
+.results-mac-status{
+  background:rgba(10,16,22,.98);
+  padding:6px 18px;
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  border-top:1px solid rgba(255,255,255,.05);
+}
+.rms-left{display:flex;align-items:center;gap:12px}
+.rms-dot{width:6px;height:6px;border-radius:50%;background:#28c840;animation:blink 2s infinite}
+.rms-text{font-size:.68rem;color:rgba(255,255,255,.35);font-family:"DM Sans",sans-serif}
+.rms-right{font-size:.68rem;color:rgba(255,155,81,.5);font-family:"DM Sans",sans-serif}
+
+/* Responsive */
+@media(max-width:900px){.results-mac-grid{grid-template-columns:1fr 1fr}.rmb-tabs{display:none}.rmb-url{min-width:160px}}
+@media(max-width:640px){.results-mac-grid{grid-template-columns:1fr 1fr}.results-page-header{padding:1.5rem}.rmc-num{font-size:2.2rem}.rmb-toolbar{display:none}}
 
 /* ══════════════════════════════════════════
    FOOTER
@@ -546,16 +729,110 @@ footer{background:var(--dark4);border-top:1px solid rgba(191,201,209,.07);paddin
   </div>
 </section>
 
-<!-- ═══ RESULTS STATS ═══ -->
+<!-- ═══ RESULTS STATS — MAC BROWSER WINDOW ═══ -->
 <section class="section results-wrap" id="results">
   <div class="section-inner">
     <div class="eyebrow reveal up">Proven Impact</div>
     <h2 class="section-h reveal up reveal-d1">Numbers Our Clients See</h2>
-    <div class="results-grid reveal up reveal-d2">
-      <div class="result-cell"><div class="result-num">40%</div><div class="result-label">Avg Drop in No-Shows</div></div>
-      <div class="result-cell"><div class="result-num">6.2×</div><div class="result-label">Average Client ROI</div></div>
-      <div class="result-cell"><div class="result-num">14 days</div><div class="result-label">Avg Time to First Results</div></div>
-      <div class="result-cell"><div class="result-num">₱25K</div><div class="result-label">Avg Monthly Cost Saved</div></div>
+
+    <div class="results-mac-window reveal scale reveal-d2">
+
+      <!-- Mac browser chrome -->
+      <div class="results-mac-bar">
+        <div class="rmb-dots">
+          <div class="rmb-dot c"></div>
+          <div class="rmb-dot m"></div>
+          <div class="rmb-dot e"></div>
+        </div>
+        <div class="rmb-tabs">
+          <div class="rmb-tab active">
+            <div class="rmb-tab-favicon"></div>
+            Nexus Growth — Client Dashboard
+            <span class="rmb-tab-close">✕</span>
+          </div>
+          <div class="rmb-tab">
+            <div class="rmb-tab-favicon" style="background:rgba(191,201,209,.2)"></div>
+            Automation Reports
+            <span class="rmb-tab-close">✕</span>
+          </div>
+        </div>
+        <div class="rmb-url">
+          <span class="rmb-lock">🔒</span>
+          <span>app.nexusgrowth.io/dashboard/results</span>
+        </div>
+        <div class="rmb-controls">
+          <span class="rmb-ctrl">⟳</span>
+          <span class="rmb-ctrl">⊡</span>
+        </div>
+      </div>
+
+      <!-- Browser toolbar -->
+      <div class="rmb-toolbar">
+        <div class="rmb-nav">
+          <div class="rmb-nav-btn">←</div>
+          <div class="rmb-nav-btn">→</div>
+          <div class="rmb-nav-btn active-nav">⟳</div>
+        </div>
+        <div class="rmb-full-url">
+          <span class="rmb-secure">SECURE</span>
+          <span class="rmb-url-text">
+            <span class="url-domain">app.nexusgrowth.io</span>/dashboard/client-results?view=all&period=30d
+          </span>
+        </div>
+        <div class="rmb-right-tools">
+          <span class="rmb-tool">☆</span>
+          <span class="rmb-tool">⤓</span>
+          <span class="rmb-tool">⋮</span>
+        </div>
+      </div>
+
+      <!-- Page content -->
+      <div class="results-page">
+        <div class="results-page-header">
+          <div>
+            <div class="results-page-title">Client Impact Dashboard</div>
+            <div class="results-page-sub">Real-time results across all active Nexus Growth clients · Updated live</div>
+          </div>
+          <div class="results-page-live">Live Data</div>
+        </div>
+
+        <div class="results-mac-grid">
+          <div class="result-mac-cell">
+            <div class="rmc-icon">📉</div>
+            <div class="rmc-num">40%</div>
+            <div class="rmc-label">Avg Drop in No-Shows</div>
+            <div class="rmc-badge">↓ 40% in 30 days</div>
+          </div>
+          <div class="result-mac-cell">
+            <div class="rmc-icon">💰</div>
+            <div class="rmc-num">6.2×</div>
+            <div class="rmc-label">Average Client ROI</div>
+            <div class="rmc-badge">↑ vs prev period</div>
+          </div>
+          <div class="result-mac-cell">
+            <div class="rmc-icon">⚡</div>
+            <div class="rmc-num">14<span style="font-size:1.4rem"> days</span></div>
+            <div class="rmc-label">Avg Time to First Results</div>
+            <div class="rmc-badge">Most see week 1</div>
+          </div>
+          <div class="result-mac-cell">
+            <div class="rmc-icon">🏦</div>
+            <div class="rmc-num">₱25K</div>
+            <div class="rmc-label">Avg Monthly Cost Saved</div>
+            <div class="rmc-badge">↑ per client / month</div>
+          </div>
+        </div>
+
+        <!-- Mac status bar -->
+        <div class="results-mac-status">
+          <div class="rms-left">
+            <div class="rms-dot"></div>
+            <span class="rms-text">nexusgrowth.io · AI Automation Dashboard · All systems operational</span>
+          </div>
+          <span class="rms-right">Last updated: just now · 40+ active clients</span>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -799,7 +1076,7 @@ footer{background:var(--dark4);border-top:1px solid rgba(191,201,209,.07);paddin
     </div>
     <div class="fcol">
       <h4>Contact</h4>
-      <a href="#">hello@nexusgrowth.io</a>
+      <a href="#"><span class="__cf_email__" data-cfemail="6c04090000032c020914191f0b1e031b1804420503">[email&#160;protected]</span></a>
       <a href="#audit">Book a Free Audit</a>
       <a href="#">Privacy Policy</a>
       <a href="#">Terms of Service</a>
@@ -822,7 +1099,7 @@ footer{background:var(--dark4);border-top:1px solid rgba(191,201,209,.07);paddin
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
 </button>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ─── ANIMATED GLOWING GRID ───
 (function(){
   const canvas = document.getElementById('gridCanvas');
